@@ -1,0 +1,107 @@
+
+.layout {
+  background-color: rgb(246, 204, 230);
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  align-items: center;
+  padding: 4rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ---------- TEXT OVERLAY ---------- */
+.overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.overlay h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e1e1e;
+  line-height: 1.2;
+}
+
+.overlay_div h4 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #444;
+}
+
+.overlay button {
+  margin-top: 1.5rem;
+  width: fit-content;
+  padding: 0.8rem 2rem;
+  background-color: #1e1e1e;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.overlay button:hover {
+  background-color: #000;
+  transform: translateY(-2px);
+}
+
+/* ---------- IMAGE GRID ---------- */
+.layout img {
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+/* Right side image container */
+.layout img:nth-child(n + 2) {
+  width: 100%;
+  height: 100%;
+}
+
+/* Image grid */
+.layout {
+  position: relative;
+}
+
+.layout img:nth-child(2) {
+  position: absolute;
+  right: 18%;
+  top: 15%;
+  width: 320px;
+  height: 400px;
+}
+
+.layout img:nth-child(3) {
+  position: absolute;
+  right: 2%;
+  top: 8%;
+  width: 280px;
+  height: 320px;
+}
+
+.layout img:nth-child(4) {
+  position: absolute;
+  right: 36%;
+  bottom: 49%;
+  width: 300px;
+  height: 360px;
+}
+
+.layout img:nth-child(5) {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  width: 280px;
+  height: 290px;
+}
+
+.layout img:nth-child(6) {
+  position: absolute;
+  right: 34%;
+  top: 49%;
+  width: 290px;
+  height: 300px;
+}

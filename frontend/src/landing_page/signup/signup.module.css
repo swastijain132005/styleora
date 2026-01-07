@@ -1,0 +1,201 @@
+.signup_container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #fbe7f1, #fdf6fa);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.signup_container h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1.5rem;
+  color: #3a3a3a;
+}
+
+.signup_container form {
+  background-color: #ffffff;
+  padding: 2rem;
+  width: 340px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup_container input {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.signup_container input:focus {
+  border-color: #e46aa3;
+}
+
+.signup_container form button {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #e46aa3;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup_container form button:hover {
+  background-color: #cf4c8d;
+}
+
+.signup_container p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.signup_container > button {
+  margin-top: 0.4rem;
+  background: none;
+  border: none;
+  color: #e46aa3;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.signup_container > button:hover {
+  text-decoration: underline;
+}
+
+.signup_div_google {
+  margin-top: 1.5rem;
+}
+
+.signup_div_google button {
+  width: 340px;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #a3a0a0;
+  background-color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup_div_google button:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 12px rgba(5, 5, 5, 0.06);
+}
+
+
+.login_container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #fbe7f1, #fdf6fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login_div {
+  background-color: #ffffff;
+  width: 340px;
+  padding: 2.2rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_div h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #3a3a3a;
+}
+
+.login_div form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login_div input {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.login_div input:focus {
+  border-color: #e46aa3;
+}
+
+.login_div form button {
+  margin-top: 0.6rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #e46aa3;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login_div form button:hover {
+  background-color: #cf4c8d;
+}
+
+.login_div p {
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.login_div > button {
+  margin-top: 0.4rem;
+  background: none;
+  border: none;
+  color: #e46aa3;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.login_div > button:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 400px) {
+  .login_div {
+    width: 90%;
+  }
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 400px) {
+  .signup_container form,
+  .signup_div_google button {
+    width: 90%;
+  }
+}

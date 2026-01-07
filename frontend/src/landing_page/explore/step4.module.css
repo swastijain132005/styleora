@@ -1,0 +1,111 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modalContent {
+  background: linear-gradient(135deg, #fff0f6, #fde7f2);
+  padding: 2rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.2);
+  animation: modalFade 0.3s ease;
+}
+
+@keyframes modalFade {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.95);}
+  100% { opacity: 1; transform: translateY(0) scale(1);}
+}
+
+.modalContent h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #2f2f2f;
+  text-align: left;
+}
+
+.optionContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.optionCard {
+  flex: 1 1 40%;
+  padding: 1rem 0;
+  border-radius: 16px;
+  background-color: #ffffff;
+  text-align: center;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.optionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(228,106,163,0.25);
+}
+
+.active {
+  background-color: #e46aa3;
+  color: #fff;
+  box-shadow: 0 14px 32px rgba(228,106,163,0.45);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.button {
+  flex: 1;
+  padding: 0.8rem 0;
+  border-radius: 14px;
+  border: none;
+  background-color: #e46aa3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #d4558f;
+  transform: translateY(-2px);
+}
+
+.buttonSkip {
+  flex: 1;
+  padding: 0.8rem 0;
+  border-radius: 14px;
+  border: 1px solid #e46aa3;
+  background-color: transparent;
+  color: #e46aa3;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buttonSkip:hover {
+  background-color: #fde7f2;
+}
+
+@media (max-width: 500px) {
+  .buttonContainer { flex-direction: column; }
+}

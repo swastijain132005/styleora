@@ -1,0 +1,151 @@
+/* Backdrop overlay */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Modal content container */
+.modalContent {
+  background: linear-gradient(135deg, #fff0f6, #fde7f2);
+  padding: 2rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2);
+  animation: modalFade 0.3s ease;
+}
+
+/* Modal fade animation */
+@keyframes modalFade {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Titles */
+.modalContent h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #2f2f2f;
+  text-align: center;
+}
+
+/* Gender cards */
+.genderContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.genderCard {
+  flex: 1;
+  padding: 1.2rem 0;
+  border-radius: 16px;
+  background-color: #ffffff;
+  text-align: center;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.genderCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(228, 106, 163, 0.25);
+}
+
+.active {
+  background-color: #e46aa3;
+  color: #ffffff;
+  box-shadow: 0 14px 32px rgba(228, 106, 163, 0.45);
+}
+
+/* Slider */
+.slider {
+  width: 100%;
+  margin: 1rem 0 2rem;
+  appearance: none;
+  height: 6px;
+  background: #f2c4d7;
+  border-radius: 10px;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #e46aa3;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #e46aa3;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Buttons */
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.button {
+  flex: 1;
+  padding: 0.8rem 0;
+  border-radius: 14px;
+  border: none;
+  background-color: #e46aa3;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: #d4558f;
+  transform: translateY(-2px);
+}
+
+.buttonSkip {
+  flex: 1;
+  padding: 0.8rem 0;
+  border-radius: 14px;
+  border: 1px solid #e46aa3;
+  background-color: transparent;
+  color: #e46aa3;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buttonSkip:hover {
+  background-color: #fde7f2;
+}
+
+/* Mobile responsive */
+@media (max-width: 500px) {
+  .genderContainer {
+    flex-direction: column;
+  }
+
+  .buttonContainer {
+    flex-direction: column;
+  }
+}

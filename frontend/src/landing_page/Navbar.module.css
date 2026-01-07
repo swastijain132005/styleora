@@ -1,0 +1,54 @@
+/* Brand / Logo */
+.heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  color: #fbcee4; /* pink accent */
+  text-decoration: none;
+}
+
+/* Sidebar container */
+.sidebar {
+  margin-left: auto;
+}
+
+/* Menu list */
+.sidebar ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links */
+.sidebar ul li a {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  text-decoration: none;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+/* Hover effect */
+.sidebar ul li a:hover {
+  color: #f4bdd8;
+  border-bottom: 2px solid #f4bdd8;
+}
+
+/* Active link */
+.sidebar ul li a.active {
+  color: #f4bdd8;
+}
+
+/* Navbar height fix */
+nav {
+  height: 64px;
+}
+
+/* Prevent content from hiding under navbar */
+body {
+  padding-top: 64px;
+}
