@@ -23,8 +23,7 @@ const catalog = {
   Women: {
     subCategories: [
       "Dresses", "Tops", "Kurtis", "Sarees",
-      "Jeans", "Palazzos", "Skirts",
-      "Ethnic Sets", "Blouses", "Shrugs"
+      "Jeans"
     ],
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: [
@@ -40,8 +39,7 @@ const catalog = {
       "Oversized T-Shirts",
       "Hoodies",
       "Sweatshirts",
-      "Joggers",
-      "Co-ord Sets"
+      
     ],
     sizes: ["S", "M", "L", "XL"],
     colors: [
