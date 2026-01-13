@@ -1,4 +1,5 @@
 import cloudinary from "./cloudconfig.js";
+import product from "./models/productmodel/product.js";
 
 const imagesByCategory = {
   men: {
