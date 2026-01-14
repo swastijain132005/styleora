@@ -1,16 +1,3 @@
-import Product from "./models/productmodel/product.js";
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-
-dotenv.config();
-const uri = process.env.MONGODB_URI;
-mongoose
-  .connect(uri, {
-    
-  })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.log(err));
 
 
 
@@ -47,44 +34,52 @@ const getPrice = (sub) => {
   return Math.floor(Math.random()*1000)+800;
 };
 
-// ----------------------
-// Seeder
-// ----------------------
+const seedProducts = async () => {
+  try {
+    await connectDB();
 
-const products = [];
+    const products = [];
 
-for (let i = 1; i <= 150; i++) {
-  const item = getRandom(menItems);
+    for (let i = 1; i <= 150; i++) {
+      const item = getRandom(menItems);
+      products.push({
+        name: `Men ${item.sub} ${i}`,
+        brand: getRandom(brands),
+        category: "men",
+        subCategory: item.sub,
+        price: getPrice(item.sub),
+        availableSizes: item.sizes,
+        colors: item.colors,
+        season: getRandom(seasons),
+        imageUrl: "placeholder"
+      });
+    }
 
-  products.push({
-    name: `Men ${item.sub} ${i}`,
-    brand: getRandom(brands),
-    category: "men",
-    subCategory: item.sub,
-    price: getPrice(item.sub),
-    availableSizes: item.sizes,
-    colors: item.colors,
-    season: getRandom(seasons),
-    imageUrl: "placeholder"   // will be updated later
-  });
-}
+    for (let i = 1; i <= 150; i++) {
+      const item = getRandom(womenItems);
+      products.push({
+        name: `Women ${item.sub} ${i}`,
+        brand: getRandom(brands),
+        category: "women",
+        subCategory: item.sub,
+        price: getPrice(item.sub),
+        availableSizes: item.sizes,
+        colors: item.colors,
+        season: getRandom(seasons),
+        imageUrl: "placeholder"
+      });
+    }
 
-for (let i = 1; i <= 150; i++) {
-  const item = getRandom(womenItems);
+    await Product.deleteMany();   // optional: clean before insert
+    await Product.insertMany(products);
 
-  products.push({
-    name: `Women ${item.sub} ${i}`,
-    brand: getRandom(brands),
-    category: "women",
-    subCategory: item.sub,
-    price: getPrice(item.sub),
-    availableSizes: item.sizes,
-    colors: item.colors,
-    season: getRandom(seasons),
-    imageUrl: "placeholder"
-  });
-}
+    console.log("🔥 300 Products Successfully Seeded");
+    process.exit();
 
-await Product.insertMany(products);
-console.log("✅ 300 Products Seeded");
-process.exit();
+  } catch (err) {
+    console.error("❌ Seeding Error:", err);
+    process.exit(1);
+  }
+};
+
+seedProducts();

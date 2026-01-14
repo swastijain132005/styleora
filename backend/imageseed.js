@@ -1,5 +1,4 @@
 import cloudinary from "./cloudconfig.js";
-import product from "./models/productmodel/product.js";
 
 const imagesByCategory = {
   men: {
@@ -129,8 +128,10 @@ const imagesByCategory = {
 const uploadCategoryImages = async () => {
   try {
     for (const category in imagesByCategory) {
+
       for (const subCategory in imagesByCategory[category]) {
         for (const url of imagesByCategory[category][subCategory]) {
+            if (!url) continue;
 
           const res = await cloudinary.uploader.upload(url, {
             folder: `styleora/${category}/${subCategory}`,
