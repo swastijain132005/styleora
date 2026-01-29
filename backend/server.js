@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import allroutes from './routes/all.routes.js';
+import allroutes from './routes/auth.routes.js';
 
 dotenv.config();
 
@@ -13,8 +13,9 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "http://localhost:5173",
 ];
+
 
 app.use(cors({
   origin: (origin, callback) => {

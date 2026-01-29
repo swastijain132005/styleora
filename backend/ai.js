@@ -1,39 +1,41 @@
-async function query(data) {
+import fetch from "node-fetch";
+
+export async function getExplanation(user, product) {
+  const prompt = `
+You are a fashion stylist.
+
+User details:
+- Skin tone: ${user.skinTone}
+- Body type: ${user.bodyType}
+
+Product details:
+- Category: ${product.category}
+- Color: ${product.color}
+- Fit: ${product.fit}
+
+Explain in 1–2 simple sentences why this product suits the user.
+Avoid generic statements.
+`;
+
   const response = await fetch(
-    "https://router.huggingface.co/v1/chat/completions",
+    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2",
     {
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.AI_API_KEY}`,
+        Authorization: `Bearer ${process.env.HF_API_KEY}`,
         "Content-Type": "application/json",
       },
-      method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        inputs: prompt,
+        parameters: {
+          max_new_tokens: 70,
+          temperature: 0.6,
+        },
+      }),
     }
   );
 
-  // ✅ ERROR HANDLING MUST BE HERE
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`HF Error: ${err}`);
-  }
+  const data = await response.json();
 
-  return response.json();
+  return data?.[0]?.generated_text || "Recommended based on your profile.";
 }
-
-query({
-  model: "mistralai/Mistral-7B-Instruct-v0.2",
-  messages: [
-    {
-      role: "user",
-      content: "What is the capital of France?",
-    },
-  ],
-  max_tokens: 50,
-  temperature: 0.3
-})
-.then((response) => {
-  console.log(response.choices[0].message.content);
-})
-.catch((err) => {
-  console.error(err.message);
-});
