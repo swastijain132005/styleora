@@ -36,10 +36,10 @@ export default function Signup() {
         <button type="submit">Sign Up</button>
       </form>
 
-      <p>Already have an account? Log in</p>
+      <p>Already have an account? <Link to="/login" style={{ textDecoration: "none" }}>Log In</Link>
+ </p>
 
-      <Link to="/login">Log In</Link>
-
+     
       <div className={styles.signup_div_google}>
         <button onClick={handleGoogleSignup}>
           Sign Up with Google
@@ -47,4 +47,4 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+} 

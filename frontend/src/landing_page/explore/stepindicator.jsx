@@ -5,10 +5,15 @@ import Step1Modal from "./basic";
 import Step2Modal from "./step2";
 import Step4Modal from "./step4";
 import Step3Modal from "./step3";
+const uri=import.meta.env.NEXT_BACKEND_URL || "http://localhost:5000";
 
 export default function StepIndicator() {
   const [activeStep, setActiveStep] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stylePicks, setStylePicks] = useState([]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+
 
   const [formData, setFormData] = useState({
      step1: { gender: "", age: 0 },
@@ -63,6 +68,40 @@ export default function StepIndicator() {
     setIsModalOpen(false);
     setActiveStep(null);
   };
+
+  const handleGetStylePicks = async () => {
+  // optional: ensure all steps are completed
+  const allDone = Object.values(completedSteps).every(Boolean);
+  if (!allDone) {
+    alert("Please complete all steps first");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setError("");
+
+    const res = await fetch(`${uri}/api/style-picks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch style picks");
+    }
+
+    const data = await res.json();
+    setStylePicks(data.picks); // assuming backend sends { picks: [...] }
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 
   return (
@@ -130,9 +169,13 @@ export default function StepIndicator() {
         
       </div>
       <div className={styles.buttonContainer}>
-          <button>get my style picks ...</button>
-          
-        </div>
+  <button onClick={handleGetStylePicks}>
+    {loading ? "Fetching your style..." : "Get my style picks"}
+  </button>
+</div>
+
+
+
 
 
        {isModalOpen && activeStep === 1 && (
