@@ -10,6 +10,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  occasion: {
+  type: String,
+  default: "daily"
+},
   category: {
     type: String,
     required: true
