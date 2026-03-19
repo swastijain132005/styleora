@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import allroutes from './routes/auth.routes.js';
+import recommendRoutes from './routes/recommend.js';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', allroutes);
+app.use('/api', recommendRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

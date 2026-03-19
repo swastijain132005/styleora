@@ -5,7 +5,7 @@ import Step1Modal from "./basic";
 import Step2Modal from "./step2";
 import Step4Modal from "./step4";
 import Step3Modal from "./step3";
-const uri=import.meta.env.NEXT_BACKEND_URL || "http://localhost:5000";
+const uri=import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 export default function StepIndicator() {
   const [activeStep, setActiveStep] = useState(null);
