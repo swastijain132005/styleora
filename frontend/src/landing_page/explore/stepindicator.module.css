@@ -135,6 +135,13 @@
   outline: none;
 }
 
+.resultsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+  justify-content: center;
+}
 
 /* 📱 Responsive */
 @media (max-width: 900px) {

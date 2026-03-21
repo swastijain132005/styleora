@@ -5,6 +5,7 @@ import Step1Modal from "./basic";
 import Step2Modal from "./step2";
 import Step4Modal from "./step4";
 import Step3Modal from "./step3";
+import ProductPage from "../result/productpage";
 const uri=import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 export default function StepIndicator() {
@@ -81,12 +82,24 @@ const [error, setError] = useState("");
     setLoading(true);
     setError("");
 
-    const res = await fetch(`${uri}/api/style-picks`, {
+    const payload ={
+       skinTone : formData.step3.skinTone,
+      age: formData.step1.age,
+      gender: formData.step1.gender,
+      subCategory: formData.step2.clothingTypes,
+      budget: formData.step4.budget,
+      season: formData.step2.seasons,
+      size: formData.step3.size,
+
+
+    }
+
+    const res = await fetch(`${uri}/api/recommend`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
@@ -94,7 +107,7 @@ const [error, setError] = useState("");
     }
 
     const data = await res.json();
-    setStylePicks(data.picks); // assuming backend sends { picks: [...] }
+    setStylePicks(data.results); // assuming backend sends { picks: [...] }
   } catch (err) {
     setError(err.message);
   } finally {
