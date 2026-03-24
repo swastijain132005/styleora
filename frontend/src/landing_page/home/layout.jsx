@@ -1,5 +1,8 @@
 import React from 'react'
 import styles from './layout.module.css'
+import { Navigate } from 'react-router-dom'
+import ProtectedRoute from '../protectedroute'
+
 
 
 export default function layout() {
@@ -12,7 +15,7 @@ export default function layout() {
           <h4>personlized fashion reimagined!!!🛍️🛒</h4>
         </div>
 
-        <button>shop now</button>
+        <button onClick = {() => {window.location.href = "/signup"}}>Sign Up</button>
       </div>
      <img src="images/photo1.jpg"alt="coming_soon" />
      <img src="images/photo3.jpg"alt="coming_soon" />

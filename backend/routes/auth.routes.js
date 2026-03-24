@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { register, login } from "../controllers/authcontroller.js";
-import { verifyFirebaseToken } from "../middleware/firebaseAuthMiddleware.js";
+import { verifyFirebaseToken } from "../middlewares/firebase.js";
 
 const authRouter = Router();
 
