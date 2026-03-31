@@ -2,7 +2,7 @@ import React ,{useState} from 'react'
 import styles from './signup.module.css'
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
-const uri = import.meta.env.NEXT_BACKEND_URL || "http://localhost:5000";
+const uri = import.meta.env.NEXT_BACKEND_URL || "http://localhost:3000";
 
 
 

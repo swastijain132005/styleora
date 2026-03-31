@@ -14,7 +14,15 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
-  const result = await signInWithPopup(auth, provider);
-  const token = await result.user.getIdToken();
-  return token;
+  try {
+    console.log("Initiating Google Sign-In...");
+    const result = await signInWithPopup(auth, provider);
+    console.log("Authentication successful:", result);
+    const token = await result.user.getIdToken();
+    console.log("Firebase token:", token);
+    return token;
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+    throw error;
+  }
 };

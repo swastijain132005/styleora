@@ -2,7 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import allroutes from './routes/auth.routes.js';
+import authrouter from './routes/auth.routes.js';
+
 import recommendRoutes from './routes/recommend.js';
 
 dotenv.config();
@@ -14,7 +15,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  "http://localhost:5173","http://localhost:3000","http://localhost:5000"
 ];
 
 
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/api', allroutes);
+app.use('/api/auth', authrouter);
 app.use('/api', recommendRoutes);
 
 app.listen(port, () => {
