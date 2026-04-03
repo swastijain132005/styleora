@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 
 const userSchema = new Schema({
@@ -23,6 +26,10 @@ userSchema.methods.comparePassword = async function (password) {
 
 // Generate JWT token
 userSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+};
+
+userSchema.methods.generaterefreshToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 

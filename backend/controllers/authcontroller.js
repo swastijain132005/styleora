@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/usermodel/register.js";
-
 // ---------------------------------------------------
 // REGISTER
 // ---------------------------------------------------
@@ -24,13 +23,21 @@ export const register = async (req, res) => {
       password: hash,
     });
 
-    const token = newUser.generateAuthToken();
-
+    const Accesstoken = newUser.generateAuthToken();
+    const refreshToken = newUser.generaterefreshToken();
+res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
     res.status(201).json({
       message: "User registered successfully",
       user: newUser,
-      token,
+      Accesstoken: Accesstoken,
     });
+    
+    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -72,3 +79,23 @@ export const login = async (req, res) => {
 };
 
 
+
+
+
+
+export const refreshToken = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) return res.status(401).json({ message: "No token provided" });
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) return res.status(401).json({ message: "Invalid token" });
+    const newAccessToken = user.generateAuthToken();
+    return res.json({ message: "Refresh token successful", accessToken: newAccessToken });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+
+};

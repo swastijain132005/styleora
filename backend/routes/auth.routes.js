@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { register, login } from "../controllers/authcontroller.js";
+import { refreshToken } from "../controllers/authcontroller.js";
 import { verifyFirebaseToken } from "../middlewares/firebase.js";
 
 const authRouter = Router();
@@ -7,6 +8,7 @@ const authRouter = Router();
 // Normal auth
 authRouter.post("/register", register);
 authRouter.post("/login", login);
+authRouter.post("/refresh-token", refreshToken);
 
 // Google Auth (Firebase)
 import User from "../models/usermodel/register.js"; // 👈 make sure this exists
