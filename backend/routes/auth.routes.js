@@ -2,6 +2,8 @@ import { Router } from "express";
 import { register, login } from "../controllers/authcontroller.js";
 import { refreshToken } from "../controllers/authcontroller.js";
 import { verifyFirebaseToken } from "../middlewares/firebase.js";
+import User from "../models/usermodel/register.js"; // 👈 make sure this exists
+
 
 const authRouter = Router();
 
@@ -17,10 +19,8 @@ authRouter.post("/google", verifyFirebaseToken, async (req, res) => {
   try {
     const { uid, email, name } = req.user;
 
-    // 🔍 Check if user exists
     let user = await User.findOne({ email });
 
-    // 🆕 If not → create user
     if (!user) {
       user = await User.create({
         email,
@@ -28,6 +28,27 @@ authRouter.post("/google", verifyFirebaseToken, async (req, res) => {
         password: uid, // Store Firebase UID as password (or use a random string)
       });
     }
+
+    const Accesstoken = user.generateAuthToken();
+    const refreshToken = user.generaterefreshToken();
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    }),json({
+      message: "User registered successfully",
+      user,
+      Accesstoken: Accesstoken,
+    });
+    ;
+    res.status(201).json({
+      message: "User registered successfully",
+      user,
+      Accesstoken: Accesstoken,
+    });
+
+
 
     // ✅ Return user
     res.json({

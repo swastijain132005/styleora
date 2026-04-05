@@ -1,55 +1,76 @@
-import React ,{useState} from 'react'
-import styles from './signup.module.css'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import styles from './signup.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
-const uri = import.meta.env.NEXT_BACKEND_URL || "http://localhost:3000";
+import { setAccessToken } from '../../utils/token';
 
+const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
-
-export default function login() {
+export default function Login() { // ✅ capital L
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-     try {
+
+    try {
       const response = await fetch(`${uri}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
-      const data = await response.json();
-      console.log(data);
-      if(response.ok) {
-        // Store token in localStorage or context
-        localStorage.setItem('token', data.token);
-        // Redirect to explore page
-        Navigate('/explore');
-      }
 
-      
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message);
+
+      // ✅ store access token
+      setAccessToken(data.accessToken);
+
+      console.log("Login success");
+
+      navigate("/explore");
+
     } catch (error) {
-      console.error(error);
+      console.error("Login failed:", error.message);
     }
   };
-  return (
-    <div  className={styles.login_container}>
-        <Navbar />
-        <div className={styles.login_div}>
-            <h2>Login</h2>
-            <form>
-                <input type="email" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input type="password" placeholder="Password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button type="submit" onClick={handleSubmit}>Login</button>
-            </form>
-            <p>
-  Don't have an account? <Link to="/signup">Sign up</Link>
-</p>
 
-           
-            </div>
+  return (
+    <div className={styles.login_container}>
+      <Navbar />
+
+      <div className={styles.login_div}>
+        <h2>Login</h2>
+
+        <form onSubmit={handleSubmit} className={styles.login_form}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p>
+          Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
+      </div>
     </div>
-  )
+  );
 }

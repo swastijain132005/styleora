@@ -99,3 +99,18 @@ export const refreshToken = async (req, res) => {
 
 
 };
+
+
+export const logout = (req, res) => {
+  try {
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false, // true in production
+    });
+
+    return res.json({ message: "Logout successful" });
+  } catch (err) {
+    return res.status(500).json({ message: "Logout failed" });
+  }
+};
