@@ -2,6 +2,7 @@ import styles from "./signup.module.css";
 import Navbar from "../Navbar";
 import { Link } from "react-router-dom";
 import { signInWithGoogle } from "../../../firebase";
+import toast from "react-hot-toast";
 import { setAccessToken } from "../../utils/token"; // ✅ ADD THIS
 
 const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
@@ -21,13 +22,17 @@ const handleGoogleSignup = async () => {
     const data = await res.json();
 
     if (!res.ok) throw new Error(data.message);
-    setAccessToken(data.accessToken); // ✅ STORE ACCESS TOKEN
+    setAccessToken(data.accessToken);
+        toast.success("Google signup success");
+        navigate("/explore");
+
 
 
     console.log(data);
     console.log("Google signup success");
   } catch (err) {
     console.error("Google signup failed", err);
+    toast.error(err.message || "Google signup failed");
   }
 };
 
@@ -54,11 +59,14 @@ export default function Signup() {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
+      toast.success("Signup success");
+      navigate("/explore");
 
       console.log(data);
       console.log("Signup success");
     } catch (err) {
       console.error("Signup failed", err);
+      toast.error(err.message || "Signup failed");
     }
   };
 

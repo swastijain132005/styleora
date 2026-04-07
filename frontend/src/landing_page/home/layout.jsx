@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './layout.module.css'
 import { Navigate } from 'react-router-dom'
-import ProtectedRoute from '../protectedroute'
 
 
 

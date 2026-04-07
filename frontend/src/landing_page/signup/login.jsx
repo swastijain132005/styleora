@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './signup.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
-import { setAccessToken } from '../../utils/token';
+import toast from 'react-hot-toast';
 
 const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
@@ -27,6 +27,7 @@ export default function Login() { // ✅ capital L
       const data = await response.json();
 
       if (!response.ok) throw new Error(data.message);
+      toast.success("Login success");
 
       // ✅ store access token
       setAccessToken(data.accessToken);
@@ -37,6 +38,7 @@ export default function Login() { // ✅ capital L
 
     } catch (error) {
       console.error("Login failed:", error.message);
+      toast.error(error.message || "Login failed");
     }
   };
 

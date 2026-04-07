@@ -49,6 +49,21 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authrouter);
 app.use('/api', recommendRoutes);
 
+app.get("/api/auth/check", (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.json({ authenticated: false });
+  }
+
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return res.json({ authenticated: true });
+  } catch {
+    return res.json({ authenticated: false });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
