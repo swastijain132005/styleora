@@ -1,72 +1,68 @@
 import styles from "./signup.module.css";
 import Navbar from "../Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithGoogle } from "../../../firebase";
+import axiosClient from "../../../config/axios";
 import toast from "react-hot-toast";
-import { setAccessToken } from "../../utils/token"; // ✅ ADD THIS
+import { setAccessToken } from "../../utils/token";
 
-const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+export default function Signup({setIsAuth}) {
+  const navigate = useNavigate();
 
-const handleGoogleSignup = async () => {
-  try {
-    const token = await signInWithGoogle();
+  // ✅ GOOGLE SIGNUP
+  const handleGoogleSignup = async () => {
+    try {
+      const token = await signInWithGoogle();
 
-    const res = await fetch(`${uri}/api/auth/google`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include", // Important for sending cookies
-    });
+      const res = await axiosClient.post(
+        "/api/auth/google",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const data = await res.json();
+      // ✅ axios uses res.data
+      setAccessToken(res.data.accessToken);
+            setIsAuth(true);
 
-    if (!res.ok) throw new Error(data.message);
-    setAccessToken(data.accessToken);
-        toast.success("Google signup success");
+
+      toast.success("Google signup success 🎉");
+setTimeout(() => {
         navigate("/explore");
+      }, 1000);
 
+    } catch (err) {
+      console.error("Google signup failed", err);
+      toast.error(err.response?.data?.message || "Google signup failed");
+    }
+  };
 
-
-    console.log(data);
-    console.log("Google signup success");
-  } catch (err) {
-    console.error("Google signup failed", err);
-    toast.error(err.message || "Google signup failed");
-  }
-};
-
-export default function Signup() {
-
-  const handlesignup = async (e) => {
+  // ✅ NORMAL SIGNUP
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const form = e.target;
 
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-
     try {
-      const res = await fetch(`${uri}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
+      await axiosClient.post("/api/auth/register", {
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
       });
+      setIsAuth(true);
 
-      const data = await res.json();
+      toast.success("Signup success 🎉");
 
-      if (!res.ok) throw new Error(data.message);
-      toast.success("Signup success");
-      navigate("/explore");
+      setTimeout(() => {
+        navigate("/explore");
+      }, 1000);
 
-      console.log(data);
-      console.log("Signup success");
     } catch (err) {
       console.error("Signup failed", err);
-      toast.error(err.message || "Signup failed");
+      toast.error(err.response?.data?.message || "Signup failed");
     }
   };
 
@@ -75,20 +71,17 @@ export default function Signup() {
       <Navbar />
       <h1>Sign Up</h1>
 
-      <form onSubmit={handlesignup}>
+      <form onSubmit={handleSignup}>
         <input type="text" name="name" placeholder="Name" required />
         <input type="email" name="email" placeholder="Email" required />
         <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">
-          Sign Up
-        </button>
+
+        <button type="submit">Sign Up</button>
       </form>
 
       <p>
         Already have an account?{" "}
-        <Link to="/login" style={{ textDecoration: "none" }}>
-          Log In
-        </Link>
+        <Link to="/login">Log In</Link>
       </p>
 
       <div className={styles.signup_div_google}>

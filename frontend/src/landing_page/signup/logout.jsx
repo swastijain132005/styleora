@@ -1,15 +1,11 @@
 import { setAccessToken } from "../../utils/token";
+import axiosClient from "../../../config/axios";
 
-const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
-export const logout = async () => {
+const logout = async ({setIsAuth}) => {
   try {
-    const res = await fetch(`${uri}/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await axiosClient.post("/api/auth/logout");
 
-    if (!res.ok) throw new Error("Logout failed");
 
     // 🔥 clear access token
     setAccessToken(null);
@@ -23,3 +19,5 @@ export const logout = async () => {
     console.error("Logout failed", err);
   }
 };
+
+export default logout;

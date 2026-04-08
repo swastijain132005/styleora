@@ -12,7 +12,7 @@ export const getRecommendations = async (req, res) => {
             size,
         } = req.body;
 
-        const filters = await getFiltersFromAI(
+        let  filters = await getFiltersFromAI(
             skinTone,
             gender,
             age,
@@ -21,18 +21,17 @@ export const getRecommendations = async (req, res) => {
             size
         );
 
-        const products =await product.find({
+        let products =await product.find({
             category: gender.toLowerCase(),
             subCategory: subCategory.toLowerCase(),
             colors: { $in: filters.colors },
             season: season.toLowerCase(),
             availableSizes: size,
-            price: { $lte: budget }
         }).limit(10);
 
         if (products.length === 0) {
             console.log("relaxing 1st time");
-        products=    product.find({
+       products=    await product.find({
                 category: gender.toLowerCase(),
                 subCategory: subCategory.toLowerCase(),
                 colors: { $in: filters.colors },
@@ -43,14 +42,14 @@ export const getRecommendations = async (req, res) => {
 
         if (products.length === 0) {
             console.log("relaxing 2nd time");
-            products=    product.find({
+            products=    await product.find({
                 category: gender.toLowerCase(),
                 colors: { $in: filters.colors },
             }).limit(10)
         }
 
         if (products.length === 0) {
-            return "No products found";
+return res.json({ results: [] });
         }
         const explanation = await getExplanationFromAI(
 

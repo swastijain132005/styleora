@@ -3,42 +3,34 @@ import styles from './signup.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 import toast from 'react-hot-toast';
+import { setAccessToken } from '../../utils/token'; // ✅ ADD THIS
+import axiosClient from '../../../config/axios';
 
-const uri = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
-export default function Login() { // ✅ capital L
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
-      const response = await fetch(`${uri}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
+      const res = await axiosClient.post("/api/auth/login", {
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) throw new Error(data.message);
-      toast.success("Login success");
-
       // ✅ store access token
-      setAccessToken(data.accessToken);
+      setAccessToken(res.data.accessToken);
 
-      console.log("Login success");
-
+      toast.success("Login successful 🎉");
+setIsAuth(true);
       navigate("/explore");
 
-    } catch (error) {
-      console.error("Login failed:", error.message);
-      toast.error(error.message || "Login failed");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Login failed");
     }
   };
 

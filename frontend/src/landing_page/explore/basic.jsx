@@ -35,7 +35,6 @@ export default function Step1Modal({ data, onSave, onClose }) {
           ))}
         </div>
 
-        {/* Age slider */}
         <h3>Age: {sliderValue}</h3>
         <input
           type="range"

@@ -5,21 +5,11 @@ import axiosClient from '../../config/axios';
 import { useState, useEffect } from 'react';
 
 
-function Navbar() {
-    const [isAuth, setIsAuth] = useState(false);
+function Navbar({isAuth, setIsAuth}) {
 
-    useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axiosClient.get("/api/auth/check");
-        setIsAuth(res.data.authenticated);
-      } catch {
-        setIsAuth(false);
-      }
-    };
+   
 
-    checkAuth();
-  }, []);
+  
 
     const handleLogout = async () => {
     try {

@@ -5,10 +5,13 @@ import Step1Modal from "./basic";
 import Step2Modal from "./step2";
 import Step4Modal from "./step4";
 import Step3Modal from "./step3";
-import ProductPage from "../result/productpage";
-const uri=import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+import axiosClient from "../../../config/axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function StepIndicator() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stylePicks, setStylePicks] = useState([]);
@@ -94,20 +97,14 @@ const [error, setError] = useState("");
 
     }
 
-    const res = await fetch(`${uri}/api/recommend`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const res = await axiosClient.post("/api/recommend", payload);
+    
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch style picks");
-    }
+    
+    const data = await res.data;
 
-    const data = await res.json();
-    setStylePicks(data.results); // assuming backend sends { picks: [...] }
+    setStylePicks(data.results);
+    navigate("/results", { state: { products: data.results } });
   } catch (err) {
     setError(err.message);
   } finally {
