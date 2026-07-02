@@ -91,7 +91,7 @@ const [error, setError] = useState("");
       gender: formData.step1.gender,
       subCategory: formData.step2.clothingTypes,
       budget: formData.step4.budget,
-      season: formData.step2.seasons,
+        season: formData.step2.seasons,
       size: formData.step3.size,
 
 
@@ -99,7 +99,9 @@ const [error, setError] = useState("");
 
     const res = await axiosClient.post("/api/recommend", payload);
     
-
+console.log("Full response:", res.data);
+console.log("Results:", res.data.results);
+console.log("Length:", res.data.results?.length);
     
     const data = await res.data;
 

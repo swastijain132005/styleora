@@ -12,15 +12,16 @@ export default function ProductPage() {
   }
 
   return (
-    <div className={styles.grid}>
-      {products.map((product) => (
-        <div key={product._id} className={styles.card}>
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className={styles.image}
-          />
+  <div className={styles.grid}>
+    {products.map((product) => (
+      <div key={product._id} className={styles.card}>
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className={styles.image}
+        />
 
+        <div className={styles.cardContent}>
           <h3>{product.name}</h3>
           <p className={styles.brand}>{product.brand}</p>
           <p className={styles.price}>₹{product.price}</p>
@@ -35,7 +36,8 @@ export default function ProductPage() {
 
           <p className={styles.reason}>{product.reason}</p>
         </div>
-      ))}
-    </div>
-  );
+      </div>
+    ))}
+  </div>
+);
 }
