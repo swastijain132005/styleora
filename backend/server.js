@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authrouter from './routes/auth.routes.js';
+import wishlistRoutes from './routes/wish.routes.js';
 
 import recommendRoutes from './routes/recommend.js';
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authrouter);
 app.use('/api', recommendRoutes);
+app.use("/api/wishlist",wishlistRoutes);
 
 app.get("/api/auth/check", (req, res) => {
   const token = req.cookies.token;
