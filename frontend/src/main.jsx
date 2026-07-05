@@ -8,7 +8,7 @@ import Login from './landing_page/signup/login.jsx'
 import Logout from './landing_page/signup/logout.jsx'
 import Explore from './landing_page/explore/stepindicator.jsx'
 import ProductPage from './landing_page/result/productpage.jsx'
-import wishlist from './landing_page/wishlist/wish.jsx'
+import Wishlist from './landing_page/wishlist/wish.jsx'
 import { Toaster } from 'react-hot-toast'
 import axiosClient from '../config/axios.js'
 import {useState,useEffect } from 'react'
@@ -41,7 +41,7 @@ function Root() {
         <Route path="/logout" element={<Logout setIsAuth={setIsAuth} />} />
         <Route path='/explore' element={<Explore />} />
         <Route path="/results" element={<ProductPage />} />
-        <Route path="/wishlist" element={<wishlist />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
   );

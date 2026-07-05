@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./wishlist.module.css";
+import styles from "./wish.module.css";
 
 import {getWishlist} from "../../api/wishlist";
 import {removewishlist} from "../../api/wishlist";

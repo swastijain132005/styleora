@@ -1,4 +1,4 @@
-import axiosClient from "../../../config/axios";
+import axiosClient from "../../config/axios";
 
 export const addwishlist=async(productId)=>{
     return await axiosClient.post("/api/wishlist",{productId});

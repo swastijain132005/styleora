@@ -5,13 +5,13 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { addwishlist } from "../../api/wishlist";
 import { checkWishlist } from "../../api/wishlist";
-import { getWishlist } from "../../api/wishlist";
+import { getWishlist, removewishlist } from "../../api/wishlist";
 
 export default function ProductPage() {
   const location = useLocation();
 
   let products = location.state?.products || [];
-  const [wishliststatus, setWishliststatus] = useState({});
+  const [wishlistStatus, setWishlistStatus] = useState({});
   const [loadingId, setLoadingId] = useState(null);
 
   useEffect(() => {
@@ -60,18 +60,18 @@ export default function ProductPage() {
 
       toast.success("Removed from wishlist");
 
-      setWishlistStatus(prev => ({
+      setWishlistStatus((prev) => ({
         ...prev,
         [productId]: false
       }));
 
     } else {
 
-      await addWishlist(productId);
+      await addwishlist(productId);
 
       toast.success("Added to wishlist");
 
-      setWishlistStatus(prev => ({
+      setWishlistStatus((prev) => ({
         ...prev,
         [productId]: true
       }));
