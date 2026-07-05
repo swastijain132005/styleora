@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { addwishlist } from "../../api/wishlist";
 import { checkWishlist } from "../../api/wishlist";
-import { getWishlist, removeWishlist } from "../../api/wishlist";
+import { getWishlist, removewishlist } from "../../api/wishlist";
 
 export default function ProductPage() {
   const location = useLocation();
@@ -56,7 +56,7 @@ export default function ProductPage() {
 
     if (wishlistStatus[productId]) {
 
-      await removeWishlist(productId);
+      await removewishlist(productId);
 
       toast.success("Removed from wishlist");
 
