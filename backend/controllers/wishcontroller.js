@@ -21,7 +21,7 @@ export const addToWishlist = async (req, res) => {
 export const removeFromWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { productId } = req.params.productId;
+    const  productId  = req.params.productId;
     const exists = await Wish.findOne({ user: userId, product: productId });
     if (!exists) {
       return res.status(400).json({ message: "Product not in wishlist" });
@@ -46,7 +46,7 @@ export const getWishlist = async (req, res) => {
 export const checkWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { productId } = req.params.productId;
+    const  productId  = req.params.productId;
     const exists = await Wish.findOne({ user: userId, product: productId });
     res.json({ exists: !!exists });
   } catch (error) {
