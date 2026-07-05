@@ -32,7 +32,7 @@ axiosClient.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          "http://localhost:3000/api/auth/refresh-token",
+          "https://styleora-mr50.onrender.com/api/auth/refresh-token",
           {},
           { withCredentials: true }
         );

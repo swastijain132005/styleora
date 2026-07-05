@@ -28,7 +28,7 @@ export const register = async (req, res) => {
 res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
     res.status(201).json({
@@ -106,7 +106,7 @@ export const logout = (req, res) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       sameSite: "lax",
-      secure: false, // true in production
+      secure: true, // true in production
     });
 
     return res.json({ message: "Logout successful" });

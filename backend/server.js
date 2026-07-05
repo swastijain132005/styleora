@@ -52,17 +52,17 @@ app.use('/api', recommendRoutes);
 app.use("/api/wishlist",wishlistRoutes);
 
 app.get("/api/auth/check", (req, res) => {
-  const token = req.cookies.token;
+  const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res.json({ authenticated: false });
+    return res.status(401).json({ authenticated: false });
   }
 
   try {
     jwt.verify(token, process.env.JWT_SECRET);
     return res.json({ authenticated: true });
-  } catch {
-    return res.json({ authenticated: false });
+  } catch (err) {
+    return res.status(401).json({ authenticated: false });
   }
 });
 

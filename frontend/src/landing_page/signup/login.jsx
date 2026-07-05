@@ -23,10 +23,9 @@ export default function Login() {
       });
 
       // ✅ store access token
-      setAccessToken(res.data.accessToken);
+      setAccessToken(res.data.token);
 
       toast.success("Login successful 🎉");
-setIsAuth(true);
       navigate("/explore");
 
     } catch (err) {
