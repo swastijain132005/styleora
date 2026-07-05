@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import styles from './signup.module.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Navbar from '../Navbar';
-import toast from 'react-hot-toast';
-import { setAccessToken } from '../../utils/token'; // ✅ ADD THIS
-import axiosClient from '../../../config/axios';
+import React, { useState } from "react";
+import styles from "./signup.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../Navbar";
+import toast from "react-hot-toast";
+import { setAccessToken } from "../../utils/token";
+import axiosClient from "../../../config/axios";
 
-
-export default function Login() {
+export default function Login({ setIsAuth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
@@ -22,14 +21,21 @@ export default function Login() {
         password,
       });
 
-      // ✅ store access token
-      setAccessToken(res.data.token);
+      // Save access token
+      setAccessToken(res.data.accessToken);
+
+      // Update auth state
+      setIsAuth(true);
 
       toast.success("Login successful 🎉");
-      navigate("/explore");
 
+      navigate("/explore");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message || "Login failed"
+      );
     }
   };
 
@@ -61,7 +67,8 @@ export default function Login() {
         </form>
 
         <p>
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Don't have an account?{" "}
+          <Link to="/signup">Sign up</Link>
         </p>
       </div>
     </div>

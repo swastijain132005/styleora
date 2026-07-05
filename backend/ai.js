@@ -17,7 +17,7 @@ const callAI = async (prompt) => {
       headers: {
   "Authorization": `Bearer ${process.env.AI_API_KEY}`,
   "Content-Type": "application/json",
-  "HTTP-Referer": "http://localhost:3000",
+  "HTTP-Referer": "https://styleora-git-main-swasti-jains-projects-907d0f55.vercel.app",
   "X-Title": "styleora"
 },
       body: JSON.stringify({

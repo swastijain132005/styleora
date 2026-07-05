@@ -6,77 +6,103 @@ import axiosClient from "../../../config/axios";
 import toast from "react-hot-toast";
 import { setAccessToken } from "../../utils/token";
 
-export default function Signup({setIsAuth}) {
+export default function Signup({ setIsAuth }) {
   const navigate = useNavigate();
 
-  // ✅ GOOGLE SIGNUP
+  // ---------------- GOOGLE SIGNUP ----------------
   const handleGoogleSignup = async () => {
     try {
-      const token = await signInWithGoogle();
+      const firebaseToken = await signInWithGoogle();
 
       const res = await axiosClient.post(
         "/api/auth/google",
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${firebaseToken}`,
           },
         }
       );
 
-      // ✅ axios uses res.data
       setAccessToken(res.data.accessToken);
-            setIsAuth(true);
+      setIsAuth(true);
 
+      toast.success("Google signup successful 🎉");
 
-      toast.success("Google signup success 🎉");
-setTimeout(() => {
-        navigate("/explore");
-      }, 1000);
-
+      navigate("/explore");
     } catch (err) {
-      console.error("Google signup failed", err);
-      toast.error(err.response?.data?.message || "Google signup failed");
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message ||
+          "Google signup failed"
+      );
     }
   };
 
-  // ✅ NORMAL SIGNUP
+  // ---------------- NORMAL SIGNUP ----------------
   const handleSignup = async (e) => {
     e.preventDefault();
 
     const form = e.target;
 
     try {
-      await axiosClient.post("/api/auth/register", {
+      const res = await axiosClient.post("/api/auth/register", {
         name: form.name.value,
         email: form.email.value,
         password: form.password.value,
       });
+
+      // Store access token
+      setAccessToken(res.data.accessToken);
+
+      // Update auth state
       setIsAuth(true);
 
-      toast.success("Signup success 🎉");
+      toast.success("Signup successful 🎉");
 
-      setTimeout(() => {
-        navigate("/explore");
-      }, 1000);
-
+      navigate("/explore");
     } catch (err) {
-      console.error("Signup failed", err);
-      toast.error(err.response?.data?.message || "Signup failed");
+      console.error(err);
+
+      toast.error(
+        err.response?.data?.message ||
+          "Signup failed"
+      );
     }
   };
 
   return (
     <div className={styles.signup_container}>
       <Navbar />
+
       <h1>Sign Up</h1>
 
       <form onSubmit={handleSignup}>
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Password" required />
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          required
+        />
 
-        <button type="submit">Sign Up</button>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+
+        <button type="submit">
+          Sign Up
+        </button>
       </form>
 
       <p>
@@ -85,7 +111,10 @@ setTimeout(() => {
       </p>
 
       <div className={styles.signup_div_google}>
-        <button type="button" onClick={handleGoogleSignup}>
+        <button
+          type="button"
+          onClick={handleGoogleSignup}
+        >
           Sign Up with Google
         </button>
       </div>

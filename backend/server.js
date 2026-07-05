@@ -1,67 +1,73 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import morgan from 'morgan';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import authrouter from './routes/auth.routes.js';
-import wishlistRoutes from './routes/wish.routes.js';
-import jwt from 'jsonwebtoken';
-import recommendRoutes from './routes/recommend.js';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import authrouter from "./routes/auth.routes.js";
+import wishlistRoutes from "./routes/wish.routes.js";
+import recommendRoutes from "./routes/recommend.js";
+import authMiddleware from "./middlewares/auth.js";
 
 dotenv.config();
-
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// ---------------- Middleware ----------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(cookieParser());
 
+// ---------------- CORS ----------------
 const allowedOrigins = [
-  "https://styleora-git-main-swasti-jains-projects-907d0f55.vercel.app/","https://styleora-d456w91r7-swasti-jains-projects-907d0f55.vercel"
+  "http://localhost:5173",
+  "https://styleora-git-main-swasti-jains-projects-907d0f55.vercel.app",
+  "https://styleora-d456w91r7-swasti-jains-projects-907d0f55.vercel.app",
 ];
 
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (Postman/mobile apps)
+      if (!origin) return callback(null, true);
 
-app.use(cors({
-  origin: true,
-  credentials: true,
-}));
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-const uri = process.env.MONGODB_URI;
-
-mongoose
-  .connect(uri, {
-    
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
   })
-  .then(() => console.log('Connected to MongoDB'))
+);
+
+// ---------------- MongoDB ----------------
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.log(err));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+// ---------------- Routes ----------------
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
 });
 
-app.use('/api/auth', authrouter);
-app.use('/api', recommendRoutes);
-app.use("/api/wishlist",wishlistRoutes);
+app.use("/api/auth", authrouter);
+app.use("/api", recommendRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
-app.get("/api/auth/check", (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ authenticated: false });
-  }
-
-  try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    return res.json({ authenticated: true });
-  } catch (err) {
-    return res.status(401).json({ authenticated: false });
-  }
+// ---------------- Auth Check ----------------
+app.get("/api/auth/check", authMiddleware, (req, res) => {
+  return res.status(200).json({
+    authenticated: true,
+    user: req.user,
+  });
 });
 
+// ---------------- Start Server ----------------
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
