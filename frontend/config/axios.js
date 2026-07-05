@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAccessToken, setAccessToken, clearAccessToken } from "../src/utils/token";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://styleora-mr50.onrender.com",
   withCredentials: true,
 });
 
