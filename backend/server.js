@@ -6,7 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authrouter from './routes/auth.routes.js';
 import wishlistRoutes from './routes/wish.routes.js';
-
+import jwt from 'jsonwebtoken';
 import recommendRoutes from './routes/recommend.js';
 
 dotenv.config();
@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 const allowedOrigins = [
-  "https://styleora-mr50.onrender.com",
+  "https://styleora-git-main-swasti-jains-projects-907d0f55.vercel.app/","https://styleora-d456w91r7-swasti-jains-projects-907d0f55.vercel"
 ];
 
 
