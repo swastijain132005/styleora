@@ -24,6 +24,7 @@ app.use(cookieParser());
 // ---------------- CORS ----------------
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://styleora-three.vercel.app"
   "https://styleora-git-main-swasti-jains-projects-907d0f55.vercel.app",
   "https://styleora-d456w91r7-swasti-jains-projects-907d0f55.vercel.app",
 ];
