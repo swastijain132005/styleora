@@ -31,7 +31,7 @@ authRouter.post("/google", verifyFirebaseToken, async (req, res) => {
       });
     }
 
-    const Accesstoken = user.generateAuthToken();
+    const accesstoken = user.generateAuthToken();
     const refreshToken = user.generaterefreshToken();
 
     // ✅ SET COOKIE + SEND RESPONSE (ONLY ONCE)
@@ -39,14 +39,14 @@ authRouter.post("/google", verifyFirebaseToken, async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
         maxAge: 1000 * 60 * 60 * 24 * 7,
       })
       .status(200)
       .json({
         message: "Login successful",
         user,
-        Accesstoken,
+        accesstoken,
       });
 
   } catch (err) {
